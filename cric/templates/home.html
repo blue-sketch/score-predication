@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+          background-color: #f9f9f9;
+          font-family: Arial, sans-serif;
+        }
+    
+        /* Navbar Styling */
+        .navbar {
+          background: white;
+          padding: 10px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        .navbar-brand img {
+          height: 50px;
+          margin-right: 10px;
+        }
+    
+        .nav-link {
+          font-size: 16px;
+        }
+    
+        .btn {
+          font-size: 14px;
+          padding: 8px 14px;
+        }
+    
+        
+    
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+          .navbar-brand img {
+            height: 40px;
+          }
+    
+          .navbar-toggler {
+            font-size: 20px;
+          }
+    
+          .nav-link {
+            font-size: 14px;
+          }
+    
+          .section {
+            padding: 20px;
+            margin: 60px auto 10px;
+          }
+    
+          .btn {
+            font-size: 12px;
+            padding: 6px 12px;
+          }
+    
+         
+        }
+      </style>
+</head>
+
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo">
+            <a class="navbar-brand" href="{% url 'home'%}">Cricket Hub</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="{% url 'home' %}">Home</a>
+                    <a class="nav-item nav-link" href="{% url 'result' %}">Predication</a>
+                    <a class="nav-item nav-link" href="#">Live Scores</a>
+                    <a class="nav-item nav-link" href="#">Upcoming Matches</a>
+                    <a class="nav-item nav-link" href="{% url 'team' %}">Teams</a>
+                </div>
+            </div>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container text-center mt-5">
+        <h1>Welcome to the Cricket Hub</h1>
+        <p>Share and explore with us!</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+</body>
+</html>
