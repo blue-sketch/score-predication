@@ -52,6 +52,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
+CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins (for testing)
 
 TEMPLATES = [
     {
@@ -128,3 +129,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '/static')
 MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+

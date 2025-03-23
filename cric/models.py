@@ -8,6 +8,15 @@ class Cricket(models.Model):
         return self.name  # Returns recipe name in Django admin
     
 
+class Feedback(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    feed = models.TextField(max_length=1000)
+
+    def __str__(self):
+        return self.name
+    
+
 # class Team(models.Model):
 #     team = models.CharField(max_length=100)
     

@@ -1,5 +1,22 @@
+# Ignore Python cache files
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore model and database files
 *.pkl
 *.csv
 *.sqlite3
-*.ipynb
+
+# Ignore environment files
+*.env
+
+# Ignore virtual environment
+venv/
+.env/
+
+# Ignore log files
+*.log
+
+# Ignore Jupyter Notebook checkpoints

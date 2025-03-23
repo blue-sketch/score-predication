@@ -4,7 +4,7 @@ from django.urls import path
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from cric.views import home
-from cric.views import login_page,register,logout_view,result,dash,profile,team,team_profile
+from cric.views import login_page,register,logout_view,result,dash,profile,team,team_profile, ask_ai_page, proxy_llm,feedback,home_view,upcoming
 
 urlpatterns = [
     path('',dash,name="dash"),
@@ -16,8 +16,12 @@ urlpatterns = [
     path('profile/',profile,name="profile"),
     path('team/', team, name="team"),
     path('team_profile/',team_profile,name="team_profile"),
-    # path('live_score/', live_score, name='live_score'),
+    path("ask-ai_page/", ask_ai_page, name="ask_ai_page"), 
+    path('feedback/', feedback, name='feedback'),
+    path('home_view/',home_view,name="home_view"),
+    path('upcoming/',upcoming,name="upcoming"),
     path('admin/', admin.site.urls),
+    path("proxy_llm/", proxy_llm, name="proxy_llm"),
 ]
 
 if settings.DEBUG:

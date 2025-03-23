@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Matches</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: whitesmoke;
+        }
+        .match-icon {
+            font-size: 2rem;
+            margin: 0 10px;
+        }
+        .match-card {
+            margin-bottom: 20px;
+        }
+        .card {
+            border: 1px solid #007bff;
+            border-radius: 10px;
+            transition: transform 0.2s;
+            background: #fff;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card-title {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="text-center">Upcoming Matches</h1>
+    <div class="text-center mb-4">
+        <button class="btn btn-primary" onclick="showMatches('t20')">T20</button>
+        <button class="btn btn-success" onclick="showMatches('odi')">ODI</button>
+        <button class="btn btn-warning" onclick="showMatches('test')">Test</button>
+    </div>
+
+    <div id="matches" class="row">
+        <!-- Matches will be displayed here -->
+    </div>
+</div>
+
+<script>
+    const matchesData = {
+        t20: [
+            { date: 'March 25, 2025', teams: 'India vs Australia', iconA: 'fa-flag-in', iconB: 'fa-flag-au' },
+            { date: 'March 26, 2025', teams: 'England vs South Africa', iconA: 'fa-flag-gb', iconB: 'fa-flag-za' },
+            { date: 'March 27, 2025', teams: 'New Zealand vs Pakistan', iconA: 'fa-flag-nz', iconB: 'fa-flag-pk' },
+            { date: 'March 28, 2025', teams: 'West Indies vs Bangladesh', iconA: 'fa-flag-ws', iconB: 'fa-flag-bd' }
+        ],
+        odi: [
+            { date: 'April 1, 2025', teams: 'Sri Lanka vs West Indies', iconA: 'fa-flag-lk', iconB: 'fa-flag-ws' },
+            { date: 'April 2, 2025', teams: 'Bangladesh vs Afghanistan', iconA: 'fa-flag-bd', iconB: 'fa-flag-af' },
+            { date: 'April 3, 2025', teams: 'India vs England', iconA: 'fa-flag-in', iconB: 'fa-flag-gb' }
+        ],
+        test: [
+            { date: 'April 10, 2025', teams: 'India vs England', iconA: 'fa-flag-in', iconB: 'fa-flag-gb' },
+            { date: 'April 11, 2025', teams: 'Australia vs New Zealand', iconA: 'fa-flag-au', iconB: 'fa-flag-nz' },
+            { date: 'April 12, 2025', teams: 'Pakistan vs South Africa', iconA: 'fa-flag-pk', iconB: 'fa-flag-za' }
+        ]
+    };
+
+    function showMatches(format) {
+        const matchesContainer = document.getElementById('matches');
+        matchesContainer.innerHTML = '';
+        matchesData[format].forEach(match => {
+            const matchCard = document.createElement('div');
+            matchCard.className = 'col-md-4 match-card';
+            matchCard.innerHTML = `
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">${match.teams}</h5>
+                        <p class="card-text">${match.date}</p>
+                        <i class="fas ${match.iconA} match-icon"></i>
+                        <i class="fas ${match.iconB} match-icon"></i>
+                    </div>
+                </div>
+            `;
+            matchesContainer.appendChild(matchCard);
+        });
+    }
+
+    // Show IPL T20 matches by default on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        showMatches('t20');
+    });
+</script>
+
+</body>
+</html>
