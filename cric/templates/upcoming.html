@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,14 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upcoming Matches</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            background-color: whitesmoke;
-        }
-        .match-icon {
-            font-size: 2rem;
-            margin: 0 10px;
+            background-color: #f8f9fa;
         }
         .match-card {
             margin-bottom: 20px;
@@ -30,68 +26,57 @@
         .card-title {
             font-weight: bold;
         }
+        .team-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+        .vs-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+        .no-matches {
+            text-align: center;
+            padding: 50px 0;
+        }
     </style>
 </head>
 <body>
 
 <div class="container mt-5">
-    <h1 class="text-center">Upcoming Matches</h1>
-    <div class="text-center mb-4">
-        <button class="btn btn-primary" onclick="showMatches('t20')">T20</button>
-        <button class="btn btn-success" onclick="showMatches('odi')">ODI</button>
-        <button class="btn btn-warning" onclick="showMatches('test')">Test</button>
-    </div>
-
-    <div id="matches" class="row">
-        <!-- Matches will be displayed here -->
-    </div>
-</div>
-
-<script>
-    const matchesData = {
-        t20: [
-            { date: 'March 25, 2025', teams: 'India vs Australia', iconA: 'fa-flag-in', iconB: 'fa-flag-au' },
-            { date: 'March 26, 2025', teams: 'England vs South Africa', iconA: 'fa-flag-gb', iconB: 'fa-flag-za' },
-            { date: 'March 27, 2025', teams: 'New Zealand vs Pakistan', iconA: 'fa-flag-nz', iconB: 'fa-flag-pk' },
-            { date: 'March 28, 2025', teams: 'West Indies vs Bangladesh', iconA: 'fa-flag-ws', iconB: 'fa-flag-bd' }
-        ],
-        odi: [
-            { date: 'April 1, 2025', teams: 'Sri Lanka vs West Indies', iconA: 'fa-flag-lk', iconB: 'fa-flag-ws' },
-            { date: 'April 2, 2025', teams: 'Bangladesh vs Afghanistan', iconA: 'fa-flag-bd', iconB: 'fa-flag-af' },
-            { date: 'April 3, 2025', teams: 'India vs England', iconA: 'fa-flag-in', iconB: 'fa-flag-gb' }
-        ],
-        test: [
-            { date: 'April 10, 2025', teams: 'India vs England', iconA: 'fa-flag-in', iconB: 'fa-flag-gb' },
-            { date: 'April 11, 2025', teams: 'Australia vs New Zealand', iconA: 'fa-flag-au', iconB: 'fa-flag-nz' },
-            { date: 'April 12, 2025', teams: 'Pakistan vs South Africa', iconA: 'fa-flag-pk', iconB: 'fa-flag-za' }
-        ]
-    };
-
-    function showMatches(format) {
-        const matchesContainer = document.getElementById('matches');
-        matchesContainer.innerHTML = '';
-        matchesData[format].forEach(match => {
-            const matchCard = document.createElement('div');
-            matchCard.className = 'col-md-4 match-card';
-            matchCard.innerHTML = `
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">${match.teams}</h5>
-                        <p class="card-text">${match.date}</p>
-                        <i class="fas ${match.iconA} match-icon"></i>
-                        <i class="fas ${match.iconB} match-icon"></i>
+    <h1 class="text-center mb-4">Upcoming Matches</h1>
+    <div class="row">
+        {% if upcoming_matches %}
+            {% for match in upcoming_matches %}
+                <div class="col-md-6 match-card">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="{{ match.team1_logo.url }}" alt="{{ match.team1 }} Logo" class="team-logo">
+                                <span class="vs-text">vs</span>
+                                <img src="{{ match.team2_logo.url }}" alt="{{ match.team2 }} Logo" class="team-logo">
+                            </div>
+                            <h5 class="card-title mt-3">{{ match.team1 }} vs {{ match.team2 }}</h5>
+                            <p class="card-text">
+                                <strong>Date:</strong> {{ match.match_date|date:"F d, Y" }}<br>
+                                <strong>Venue:</strong> {{ match.venue }}<br>
+                                <strong>Format:</strong> {{ match.format }}
+                            </p>
+                        </div>
                     </div>
                 </div>
-            `;
-            matchesContainer.appendChild(matchCard);
-        });
-    }
-
-    // Show IPL T20 matches by default on page load
-    document.addEventListener("DOMContentLoaded", () => {
-        showMatches('t20');
-    });
-</script>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-info no-matches" role="alert">
+                    <h4 class="alert-heading">No Upcoming Matches Scheduled</h4>
+                    <p>Stay tuned for updates on upcoming matches.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
 
 </body>
 </html>

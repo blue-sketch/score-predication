@@ -4,19 +4,16 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Cricket,Feedback
+from .models import Cricket, Feedback, Team, Player, Format, PlayerStats, ReportCard,UpcomingMatch
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 import pickle
 import pandas as pd
 import os
 import requests
+from django.utils import timezone
 from django.http import JsonResponse
 from django.shortcuts import render
-import requests
-from django.http import JsonResponse
-
-
-
 
 
 def dash(request):  
@@ -77,16 +74,6 @@ def register(request):
 
 def home(request):
     return render(request, "home.html")
-
-
-
-
-def team(request):
-    return render(request,'team.html')
-
-
-def team_profile(request):
-    return render(request,"team_profile.html")
 
 
 
@@ -264,6 +251,7 @@ def proxy_llm(request):
     statement = request.GET.get("statement", "")
     if not statement:
         return JsonResponse({"error": "Missing 'statement' parameter"}, status=400)
+    
 
     try:
         response = requests.get(f"{NGROK_URL}?statement={statement}", timeout=10)
@@ -290,27 +278,61 @@ def feedback(request):
         email = request.POST.get("email")
         feed = request.POST.get("feed")
 
-        feedback_entry = Feedback.objects.create(name=name, email=email, feed=feed)
-        feedback_entry.save()
+        feedbacks = Feedback.objects.create(name=name, email=email, feed=feed)
+        feedbacks.save()
         
         return redirect('feedback')  
     return render(request, 'feedback.html')
 
 
-
-def home_view(request):
-    feedback_list = Feedback.objects.all().order_by('-id')  # Fetch all feedback (latest first)
-    paginator = Paginator(feedback_list, 5)  # Show 5 feedbacks per page
-
-    page_number = request.GET.get('page')  # Get page number from URL
-    feedbacks = paginator.get_page(page_number)  # Get paginated feedback
-
-    print("Feedback Data:", feedbacks)  # Debugging output
-
-    return render(request, 'home.html', {'feedbacks': feedbacks})
+def feedback_view(request):
+    newfeed = Feedback.objects.all()
+    print(newfeed)
+    return render(request, 'home.html', {'feedbacks': newfeed})
 
 
+def upcoming_matches_view(request):
+    upcoming_matches = UpcomingMatch.objects.filter(match_date__gte=now()).order_by('match_date')
+    return render(request, 'upcoming_matches.html', {'upcoming_matches': upcoming_matches})
 
-def upcoming(request):
-    return render(request,'upcoming.html')
 
+''' for teams and player '''
+def team_list(request):
+    teams = Team.objects.all()
+    return render(request, 'team_list.html', {'teams': teams})
+
+def team_detail(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+    players = team.players.all()  # Fetch all players in the team
+    return render(request, 'team_detail.html', {'team': team, 'players': players})
+
+def player_list(request):
+    players = Player.objects.all()
+    return render(request, 'player_list.html', {'players': players})
+
+def player_detail(request, player_id):
+    player = get_object_or_404(Player, id=player_id)
+    stats = player.stats.all()  # Fetch all player stats
+    return render(request, 'player_detail.html', {'player': player, 'stats': stats})
+
+
+# def team(request):
+#     return render(request,'team.html')
+
+
+# def team_profile(request):
+#     return render(request,"team_profile.html")
+
+
+
+# def get_live_score(request):
+#     api_key = "6342f7da9emshfdc337fa9bea93ap183088jsn485a25451373"  # Replace with your actual API key
+#     url = f"https://api.cricapi.com/v1/currentMatches?apikey={api_key}"
+    
+#     response = requests.get(url)
+    
+#     if response.status_code == 200:
+#         data = response.json()
+#         return JsonResponse(data)
+#     else:
+#         return JsonResponse({"error": "Failed to fetch live scores"}, status=500)
