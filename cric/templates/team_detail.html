@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ team.name }}</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% load static %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         .navbar {
@@ -26,79 +25,95 @@
         }
 
         .team-card {
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
             background: white;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
             text-align: center;
         }
 
         .team-logo {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             object-fit: contain;
-            margin: auto;
+            margin: 0 auto 20px;
         }
 
-        .players-box {
-            background: white;
+        .info-box {
+            background-color: #f9f9f9;
+            border-radius: 12px;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            text-align: left;
+        }
+
+        .info-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #0d6efd;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body class="bg-gray-100">
 
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="{% url 'home' %}">
-                <img src="{% static 'images/logo.png' %}" alt="Logo" width="40" class="me-2">
-                <span class="text-dark">Cricket Hub</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="d-flex ms-auto">
-                <a href="{% url 'team_list' %}" class="btn btn-outline-primary">Back to Teams</a>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" width="40" class="me-2">
+            <span class="text-dark">Cricket Hub</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="d-flex ms-auto">
+            <a href="{% url 'team_list' %}" class="btn btn-outline-primary">Back to Teams</a>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="team-card">
-                    <img src="{{ team.logo_url }}" alt="{{ team.name }}" class="team-logo">
-                    <h2 class="text-3xl font-bold text-primary mt-3">{{ team.name }} ({{ team.country }})</h2>
-                    <p class="text-muted">Established: {{ team.established_date }}</p>
-                    <p class="fw-semibold">🏆 Trophies Won: {{ team.trophies_won }}</p>
-                    <p class="text-gray-700">{{ team.team_summary }}</p>
-                </div>
-            </div>
-        </div>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="team-card">
+                <img src="{% static 'images/' %}{{ team.name|lower }}.png" alt="{{ team.name }} Logo" class="team-logo">
+                <h2 class="text-3xl font-bold text-primary">{{ team.name }} ({{ team.country }})</h2>
+                <p class="text-muted">Established: {{ team.established_date }}</p>
 
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-8">
-                <div class="players-box">
-                    <h3 class="text-2xl font-bold text-primary">Players</h3>
-                    <ul class="list-group mt-3">
-                        {% for player in players %}
-                            <li class="list-group-item">
-                                <a href="{% url 'player_detail' player.id %}" class="text-blue-500 fw-semibold">
-                                    {{ player.name }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                <div class="info-box mt-4">
+                    <div class="info-title">🏆 Trophies Won</div>
+                    <div class="info-value">{{ team.trophies_won }}</div>
                 </div>
+
+                <p class="text-gray-700 mt-4">{{ team.team_summary }}</p>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Players List -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8">
+            <div class="bg-white shadow rounded p-4">
+                <h3 class="text-2xl font-semibold text-primary mb-3">Players</h3>
+                <ul class="list-group">
+                    {% for player in players %}
+                        <li class="list-group-item">
+                            <a href="{% url 'player_detail' player.id %}" class="text-blue-600 fw-semibold">{{ player.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

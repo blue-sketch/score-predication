@@ -1,0 +1,50 @@
+[
+    {
+        "title": "Virat Kohli Reaches 80 International Centuries",
+        "image": "/static/images/virat.png",
+        "summary": "Virat Kohli scored his 80th century in a record-breaking innings against South Africa.",
+        "link": "https://timesofindia.indiatimes.com/sports"
+    },
+    {
+        "title": "India Clinches ODI Series Against Australia",
+        "image": "/static/images/virat.png",
+        "summary": "India secured a thrilling victory in the final ODI to win the series 2-1.",
+        "link": "https://www.espncricinfo.com/"
+    },
+    {
+        "title": "MS Dhoni Announces His Return for IPL 2025",
+        "image": "/static/images/virat.png",
+        "summary": "MS Dhoni confirms he will play for CSK in IPL 2025, thrilling fans across the globe.",
+        "link": "https://www.news18.com/cricketnext/"
+    },
+    {
+        "title": "Rohit Sharma Talks Strategy Ahead of World Cup",
+        "image": "/static/images/virat.png",
+        "summary": "Indian captain Rohit Sharma shared insights into the team’s preparation for the upcoming World Cup.",
+        "link": "https://www.republicworld.com/sports-news/cricket-news/"
+    },
+    {
+        "title": "Bumrah Destroys England with 5-Wicket Haul",
+        "image": "/static/images/virat.png",
+        "summary": "Jasprit Bumrah showcased his pace prowess, taking 5 wickets in a phenomenal performance.",
+        "link": "https://www.hindustantimes.com/cricket"
+    },
+    {
+        "title": "India Tops ICC ODI Rankings After Series Win",
+        "image": "/static/images/virat.png",
+        "summary": "India climbed to the No. 1 spot in ICC ODI rankings after winning the latest series.",
+        "link": "https://www.icc-cricket.com/news"
+    },
+    {
+        "title": "Hardik Pandya’s All-Round Brilliance Leads to Victory",
+        "image": "/static/images/virat.png",
+        "summary": "Pandya starred with both bat and ball to guide India to a confident win.",
+        "link": "https://www.hindustantimes.com/cricket"
+    },
+    {
+        "title": "Cricket World Cup 2025 Trophy Revealed",
+        "image": "/static/images/virat.png",
+        "summary": "The official trophy for the 2025 ICC Cricket World Cup has been unveiled in London.",
+        "link": "https://www.moneycontrol.com/news/trends/sports"
+    }
+]

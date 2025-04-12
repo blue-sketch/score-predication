@@ -4,18 +4,20 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Cricket,Feedback
-from .models import Cricket, Feedback, Team, Player, Format, PlayerStats, ReportCard,UpcomingMatch
+from .models import Cricket, Feedback, Team, Player, Format, PlayerStats, ReportCard
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 import pickle
 import pandas as pd
 import os
+from django.conf import settings
 import requests
 from django.utils import timezone
 from django.http import JsonResponse
 from django.shortcuts import render
 
 
+'''dash page'''
 def dash(request):  
     return render(request,'dash.html')
 
@@ -24,9 +26,7 @@ def profile(request):
     return render(request,'profile.html')
 
 
-# def live_score(request):
-#     return render(request,'live_score.html')
-
+'''login page'''
 def login_page(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -44,12 +44,12 @@ def login_page(request):
     return render(request, "login.html")
 
 
+
 def logout_view(request):
     logout(request)
     return redirect("login_page")
 
-
-
+'''register page'''
 def register(request):
     if request.method == "POST":
         first_name = request.POST.get("first_name")
@@ -76,13 +76,17 @@ def home(request):
     return render(request, "home.html")
 
 
+'''model-1'''
+
+
+# Load the model safely using BASE_DIR
+MODEL_PATH = os.path.join(settings.BASE_DIR, 'cric', 'ml-models', 'pipe.pkl')
 
 try:
-    with open('cric/pipe.pkl', 'rb') as model_file:
+    with open(MODEL_PATH, 'rb') as model_file:
         pipe = pickle.load(model_file)
 except FileNotFoundError:
     pipe = None
-
 
 teams = [
     'Australia', 'India', 'Bangladesh', 'New Zealand', 'South Africa', 
@@ -99,7 +103,6 @@ cities = [
     'Christchurch', 'Trinidad'
 ]
 
-
 def result(request):
     prediction = None
     error = None
@@ -112,13 +115,11 @@ def result(request):
             batting_team = request.POST.get('batting_team', '').strip()
             bowling_team = request.POST.get('bowling_team', '').strip()
             city = request.POST.get('city', '').strip()
-
             current_score = request.POST.get('current_score', '').strip()
             overs = request.POST.get('overs', '').strip()
             wickets = request.POST.get('wickets', '').strip()
             last_five = request.POST.get('last_five', '').strip()
 
-            # Check for missing fields
             required_fields = [batting_team, bowling_team, city, current_score, overs, wickets, last_five]
             if any(not field for field in required_fields):
                 error = 'All fields are required.'
@@ -134,19 +135,19 @@ def result(request):
                 if overs == 0:
                     error = 'Invalid input: Overs cannot be zero.'
                 else:
-                    balls_left = 120 - (overs * 6)
+                    balls_left = 120 - int(overs * 6)
                     wickets_left = 10 - wickets
                     crr = current_score / overs
 
                     input_df = pd.DataFrame({
-                            'batting_team': [batting_team],
-                            'bowling_team': [bowling_team],
-                            'city': [city],
-                            'current_score': [current_score],
-                            'balls_left': [balls_left],
-                            'wicket_left': [wickets_left],  
-                            'current_run_rate': [crr],
-                            'last_five': [last_five]
+                        'batting_team': [batting_team],
+                        'bowling_team': [bowling_team],
+                        'city': [city],
+                        'current_score': [current_score],
+                        'balls_left': [balls_left],
+                        'wicket_left': [wickets_left],  
+                        'current_run_rate': [crr],
+                        'last_five': [last_five]
                     })
 
                     result = pipe.predict(input_df)
@@ -156,94 +157,111 @@ def result(request):
             error = f'An error occurred: {e}'
 
     return render(request, 'index.html', {
-        'teams': sorted(teams), 'cities': sorted(cities),
+        'teams': sorted(teams),
+        'cities': sorted(cities),
         'prediction': prediction,
         'error': error
     })
 
 
 
-# model_path = os.path.join(os.path.dirname(__file__), "pipe.pkl")
-# if not os.path.exists(model_path):
-#     raise FileNotFoundError("Model file 'pipe.pkl' not found.")
+'''model-2'''
 
-# pipe = pickle.load(open(model_path, "rb"))
+model2_path = os.path.join(os.path.dirname(__file__), 'ml-models', 'model2.pkl')
+try:
+    with open(model2_path, 'rb') as file:
+        pipe_model2 = pickle.load(file)
+except FileNotFoundError:
+    pipe_model2 = None
 
-# teams = [
-#     "Sunrisers Hyderabad", "Mumbai Indians", "Royal Challengers Bangalore",
-#     "Kolkata Knight Riders", "Kings XI Punjab", "Chennai Super Kings",
-#     "Rajasthan Royals", "Delhi Capitals"
-# ]
+teams_model2 = [
+    "Sunrisers Hyderabad", "Mumbai Indians", "Royal Challengers Bangalore",
+    "Kolkata Knight Riders", "Kings XI Punjab", "Chennai Super Kings",
+    "Rajasthan Royals", "Delhi Capitals"
+]
 
-# cities = [
-#     "Hyderabad", "Bangalore", "Mumbai", "Indore", "Kolkata", "Delhi",
-#     "Chandigarh", "Jaipur", "Chennai", "Cape Town", "Port Elizabeth",
-#     "Durban", "Centurion", "East London", "Johannesburg", "Kimberley",
-#     "Bloemfontein", "Ahmedabad", "Cuttack", "Nagpur", "Dharamsala",
-#     "Visakhapatnam", "Pune", "Raipur", "Ranchi", "Abu Dhabi",
-#     "Sharjah", "Mohali", "Bengaluru"
-# ]
+cities_model2 = [
+    "Hyderabad", "Bangalore", "Mumbai", "Indore", "Kolkata", "Delhi",
+    "Chandigarh", "Jaipur", "Chennai", "Cape Town", "Port Elizabeth",
+    "Durban", "Centurion", "East London", "Johannesburg", "Kimberley",
+    "Bloemfontein", "Ahmedabad", "Cuttack", "Nagpur", "Dharamsala",
+    "Visakhapatnam", "Pune", "Raipur", "Ranchi", "Abu Dhabi",
+    "Sharjah", "Mohali", "Bengaluru"
+]
 
-# def index(request):
-#     if request.method == "POST":
-#         batting_team = request.POST.get("batting_team")
-#         bowling_team = request.POST.get("bowling_team")
-#         city = request.POST.get("city")
+def result_model2(request):
+    context = {
+        'teams_model2': teams_model2,
+        'cities_model2': cities_model2,
+        'prediction_model2': None,
+        'error_model2': None,
+    }
 
-#         try:
-#             target = int(request.POST.get("target", 0))
-#             score = int(request.POST.get("score", 0))
-#             overs = float(request.POST.get("overs", 0))
-#             wickets = int(request.POST.get("wickets", 0))
-#         except ValueError:
-#             return render(request, "ipl.html", {"teams": teams, "cities": cities, "error": "Invalid input values."})
+    if request.method == "POST":
+        if not pipe_model2:
+            context['error_model2'] = "Model 2 file not loaded."
+            return render(request, "ipl.html", context)
 
-#         if overs == 0 or target == 0:
-#             return render(request, "ipl.html", {"teams": teams, "cities": cities, "error": "Overs and target must be greater than 0."})
+        try:
+            batting_team = request.POST.get("batting_team")
+            bowling_team = request.POST.get("bowling_team")
+            city = request.POST.get("city")
+            target = int(request.POST.get("target", 0))
+            score = int(request.POST.get("score", 0))
+            overs = float(request.POST.get("overs", 0))
+            wickets = int(request.POST.get("wickets", 0))
 
-#         runs_left = max(0, target - score)
-#         balls_left = max(0, 120 - int(overs * 6))
-#         wickets_left = max(0, 10 - wickets)
+            if overs == 0 or target == 0:
+                context['error_model2'] = "Overs and Target must be greater than 0."
+                return render(request, "ipl.html", context)
 
-#         crr = score / overs if overs > 0 else 0
-#         rrr = (runs_left * 6) / balls_left if balls_left > 0 else 0
+            runs_left = target - score
+            balls_left = 120 - int(overs * 6)
+            wickets_left = 10 - wickets
+            crr = score / overs
+            rrr = (runs_left * 6) / balls_left if balls_left > 0 else 0
 
-#         input_df = pd.DataFrame({
-#             "batting_team": [batting_team],
-#             "bowling_team": [bowling_team],
-#             "city": [city],
-#             "runs_left": [runs_left],
-#             "balls_left": [balls_left],
-#             "wickets": [wickets_left],
-#             "total_runs_x": [target],
-#             "crr": [crr],
-#             "rrr": [rrr]
-#         })
+            input_df = pd.DataFrame({
+                'batting_team': [batting_team],
+                'bowling_team': [bowling_team],
+                'city': [city],
+                'runs_left': [runs_left],
+                'balls_left': [balls_left],
+                'wickets': [wickets_left],
+                'total_runs_x': [target],
+                'crr': [crr],
+                'rrr': [rrr]
+            })
 
-#         try:
-#             result = pipe.predict_proba(input_df)
-#             loss_prob = result[0][0]
-#             win_prob = result[0][1]
+            prediction_proba = pipe_model2.predict_proba(input_df)[0]
+            loss_prob = round(prediction_proba[0] * 100, 2)
+            win_prob = round(prediction_proba[1] * 100, 2)
 
-#             winner_msg = f"{batting_team} chances are HIGH" if win_prob > loss_prob else f"{bowling_team} chances are HIGH"
-#             loser_msg = f"{bowling_team} chances are LOW" if win_prob > loss_prob else f"{batting_team} chances are LOW"
+            if win_prob > loss_prob:
+                winner = f"{batting_team} has a {win_prob}% chance of winning."
+                loser = f"{bowling_team} has a {loss_prob}% chance of winning."
+            else:
+                winner = f"{bowling_team} has a {loss_prob}% chance of winning."
+                loser = f"{batting_team} has a {win_prob}% chance of winning."
 
-#             return render(request, "ipl.html", {
-#                 "teams": teams,
-#                 "cities": cities,
-#                 "prediction": True,
-#                 "batting_team": batting_team,
-#                 "bowling_team": bowling_team,
-#                 "win_prob": round(win_prob * 100, 2),
-#                 "loss_prob": round(loss_prob * 100, 2),
-#                 "winner_msg": winner_msg,
-#                 "loser_msg": loser_msg
-#             })
-#         except Exception as e:
-#             return render(request, "ipl.html", {"teams": teams, "cities": cities, "error": f"Prediction Error: {str(e)}"})
+            context.update({
+                'prediction_model2': True,
+                'batting_team_model2': batting_team,
+                'bowling_team_model2': bowling_team,
+                'win_prob_model2': win_prob,
+                'loss_prob_model2': loss_prob,
+                'winner_msg_model2': winner,
+                'loser_msg_model2': loser
+            })
 
-#     return render(request, "ipl.html", {"teams": teams, "cities": cities})
+        except Exception as e:
+            context['error_model2'] = f"An error occurred: {str(e)}"
 
+    return render(request, "ipl.html", context)
+
+
+
+'''chatbot'''
 
 NGROK_URL = "https://pet-snapper-happy.ngrok-free.app/call_llm/"
 
@@ -255,9 +273,9 @@ def proxy_llm(request):
 
     try:
         response = requests.get(f"{NGROK_URL}?statement={statement}", timeout=10)
-        response.raise_for_status()  # Raise an error for HTTP errors (4xx, 5xx)
+        response.raise_for_status()  
 
-        return JsonResponse(response.json())  # Return proper JSON response
+        return JsonResponse(response.json())  
 
     except requests.exceptions.RequestException as e:
         return JsonResponse({"error": "Failed to fetch data", "details": str(e)}, status=500)
@@ -266,12 +284,14 @@ def proxy_llm(request):
 def ask_ai_page(request):
     """Render the IPL page with LLM response."""
     statement = request.GET.get("statement", "Predict IPL Score") 
-    # llm_result = call_llm(statement)  # Call API
     print("in view.py")
 
-    return render(request, "ask_ai.html", {"llm_result": "result from view.py"})  # Pass result to template
+    return render(request, "ask_ai.html", {"llm_result": "result from view.py"}) 
 
 
+
+
+'''feedback'''
 def feedback(request):
     if request.method == 'POST':
         name = request.POST.get("name")
@@ -291,19 +311,15 @@ def feedback_view(request):
     return render(request, 'home.html', {'feedbacks': newfeed})
 
 
-def upcoming_matches_view(request):
-    upcoming_matches = UpcomingMatch.objects.filter(match_date__gte=now()).order_by('match_date')
-    return render(request, 'upcoming_matches.html', {'upcoming_matches': upcoming_matches})
-
-
 ''' for teams and player '''
+
 def team_list(request):
     teams = Team.objects.all()
     return render(request, 'team_list.html', {'teams': teams})
 
 def team_detail(request, team_id):
     team = get_object_or_404(Team, id=team_id)
-    players = team.players.all()  # Fetch all players in the team
+    players = team.players.all() 
     return render(request, 'team_detail.html', {'team': team, 'players': players})
 
 def player_list(request):
@@ -312,27 +328,15 @@ def player_list(request):
 
 def player_detail(request, player_id):
     player = get_object_or_404(Player, id=player_id)
-    stats = player.stats.all()  # Fetch all player stats
+    stats = player.stats.all()  
     return render(request, 'player_detail.html', {'player': player, 'stats': stats})
 
 
-# def team(request):
-#     return render(request,'team.html')
+''' upcoming matches '''
+def upcoming(request):
+    return render(request,"upcoming.html")
 
 
-# def team_profile(request):
-#     return render(request,"team_profile.html")
-
-
-
-# def get_live_score(request):
-#     api_key = "6342f7da9emshfdc337fa9bea93ap183088jsn485a25451373"  # Replace with your actual API key
-#     url = f"https://api.cricapi.com/v1/currentMatches?apikey={api_key}"
-    
-#     response = requests.get(url)
-    
-#     if response.status_code == 200:
-#         data = response.json()
-#         return JsonResponse(data)
-#     else:
-#         return JsonResponse({"error": "Failed to fetch live scores"}, status=500)
+'''articles'''
+def articles(request):
+    return render(request,"articles.html")

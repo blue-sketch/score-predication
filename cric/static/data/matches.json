@@ -1,0 +1,262 @@
+[
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "England",
+            "team_image": "/static/images/england.png"
+        },
+        "format": "T20",
+        "match_date": "2025-04-20T19:00:00",
+        "venue": "Wankhede Stadium, Mumbai"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "England",
+            "team_image": "/static/images/england.png"
+        },
+        "format": "ODI",
+        "match_date": "2025-04-23T13:30:00",
+        "venue": "Eden Gardens, Kolkata"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Pakistan",
+            "team_image": "/static/images/pakistan.png"
+        },
+        "format": "T20",
+        "match_date": "2025-05-01T19:00:00",
+        "venue": "Narendra Modi Stadium, Ahmedabad"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Australia",
+            "team_image": "/static/images/australia.png"
+        },
+        "format": "Test",
+        "match_date": "2025-05-10T10:00:00",
+        "venue": "MCG, Melbourne"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Bangladesh",
+            "team_image": "/static/images/bangladesh.png"
+        },
+        "format": "ODI",
+        "match_date": "2025-05-15T13:30:00",
+        "venue": "Sher-e-Bangla Stadium, Dhaka"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "New Zealand",
+            "team_image": "/static/images/newzealand.png"
+        },
+        "format": "T20",
+        "match_date": "2025-05-20T19:00:00",
+        "venue": "Sky Stadium, Wellington"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Sri Lanka",
+            "team_image": "/static/images/srilanka.png"
+        },
+        "format": "ODI",
+        "match_date": "2025-05-25T14:00:00",
+        "venue": "R. Premadasa Stadium, Colombo"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "South Africa",
+            "team_image": "/static/images/southafrica.png"
+        },
+        "format": "Test",
+        "match_date": "2025-06-01T10:30:00",
+        "venue": "Newlands, Cape Town"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Afghanistan",
+            "team_image": "/static/images/afghanistan.png"
+        },
+        "format": "T20",
+        "match_date": "2025-06-05T19:00:00",
+        "venue": "Arun Jaitley Stadium, Delhi"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Zimbabwe",
+            "team_image": "/static/images/zimbabwe.png"
+        },
+        "format": "ODI",
+        "match_date": "2025-06-10T13:00:00",
+        "venue": "Harare Sports Club, Harare"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "West Indies",
+            "team_image": "/static/images/westindies.png"
+        },
+        "format": "T20",
+        "match_date": "2025-06-15T20:00:00",
+        "venue": "Kensington Oval, Barbados"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "England",
+            "team_image": "/static/images/england.png"
+        },
+        "format": "Test",
+        "match_date": "2025-07-01T10:30:00",
+        "venue": "Lords, London"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Pakistan",
+            "team_image": "/static/images/pakistan.png"
+        },
+        "format": "T20",
+        "match_date": "2025-07-10T19:00:00",
+        "venue": "Gaddafi Stadium, Lahore"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Australia",
+            "team_image": "/static/images/australia.png"
+        },
+        "format": "ODI",
+        "match_date": "2025-07-20T13:30:00",
+        "venue": "SCG, Sydney"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "New Zealand",
+            "team_image": "/static/images/newzealand.png"
+        },
+        "format": "Test",
+        "match_date": "2025-08-01T10:00:00",
+        "venue": "Green Park, Kanpur"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Bangladesh",
+            "team_image": "/static/images/bangladesh.png"
+        },
+        "format": "T20",
+        "match_date": "2025-08-08T19:00:00",
+        "venue": "Rajiv Gandhi Stadium, Hyderabad"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Sri Lanka",
+            "team_image": "/static/images/srilanka.png"
+        },
+        "format": "ODI",
+        "match_date": "2025-08-15T14:00:00",
+        "venue": "M. Chinnaswamy Stadium, Bengaluru"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "South Africa",
+            "team_image": "/static/images/southafrica.png"
+        },
+        "format": "T20",
+        "match_date": "2025-08-22T19:00:00",
+        "venue": "New Wanderers Stadium, Johannesburg"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "Afghanistan",
+            "team_image": "/static/images/afghanistan.png"
+        },
+        "format": "ODI",
+        "match_date": "2025-08-30T13:00:00",
+        "venue": "M. A. Chidambaram Stadium, Chennai"
+    },
+    {
+        "team1": {
+            "name": "India",
+            "team_image": "/static/images/india.png"
+        },
+        "team2": {
+            "name": "West Indies",
+            "team_image": "/static/images/westindies.png"
+        },
+        "format": "Test",
+        "match_date": "2025-09-05T10:00:00",
+        "venue": "Brian Lara Stadium, Trinidad"
+    }
+]

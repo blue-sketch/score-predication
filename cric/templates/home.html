@@ -13,7 +13,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
-            padding-top: 60px; 
+            padding-top: 60px;
         }
 
         .navbar {
@@ -27,7 +27,7 @@
         }
 
         .navbar-brand img {
-            height: 45px; 
+            height: 45px;
         }
 
         .navbar-nav .nav-link {
@@ -35,7 +35,6 @@
             font-weight: 500;
         }
 
-        /* Hero Section */
         #hero {
             padding: 100px 20px 60px;
             text-align: center;
@@ -57,18 +56,25 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #1b81ff;
-            color: white;
-            padding: 15px;
+            color: black;
+            padding: 20px;
             border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: 0.3s;
-            font-size: 30px;
+            background: transparent;
+            border: 2px solid black;
+        }
+
+        .ai-button i {
+            font-size: 35px;
+            color: black;
         }
 
         .ai-button:hover {
-            background: #757575;
+            background: transparent;
+            color: black;
+            border-color: black;
         }
 
         .btn-custom {
@@ -85,7 +91,6 @@
             color: white;
         }
 
-        /* Features Section */
         #features {
             padding: 60px 20px;
             background: #f1f1f1;
@@ -121,7 +126,19 @@
             font-size: 0.9rem;
         }
 
-        /* Contact Section */
+        #widget {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        #widget iframe {
+            width: 100%;
+            max-width: 900px;
+            min-height: 250px;
+            margin: 0 auto;
+            display: block;
+        }
+
         #contact {
             padding: 50px 20px;
             background: white;
@@ -159,57 +176,88 @@
             background: #0056b3;
             color: white;
         }
-        .feedback{
+
+        .feedback {
             margin-top: 30px;
             margin-bottom: 20px;
         }
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer h5 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        footer p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .social-icons-footer {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .social-icons-footer a {
+            font-size: 30px;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .social-icons-footer a:hover {
+            color: #ff9800;
+        }
+
         @media (max-width: 768px) {
-    #hero h1 {
-        font-size: 2rem;
-    }
-    
-    #hero p {
-        font-size: 1rem;
-    }
-    .ai-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #1b81ff;
-    color: white;
-    padding: 15px;
-    border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: 0.3s;
-    font-size: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+            #hero h1 {
+                font-size: 2rem;
+            }
 
-.ai-button:hover {
-    background: #757575;
-}
+            #hero p {
+                font-size: 1rem;
+            }
 
+            .ai-button {
+                font-size: 30px;
+                padding: 18px;
+            }
 
-    .feature-box {
-        width: 90%;
-        margin: 10px auto;
-    }
+            .feature-box {
+                width: 90%;
+                margin: 10px auto;
+            }
 
-    .navbar {
-        height: auto;
-        padding: 10px 0;
-    }
+            .navbar {
+                height: auto;
+                padding: 10px 0;
+            }
 
-    .ai-button {
-        bottom: 10px;
-        right: 10px;
-        padding: 10px;
-        font-size: 25px;
-    }
-}
+            .ai-button {
+                bottom: 10px;
+                right: 10px;
+                padding: 15px;
+                font-size: 30px;
+            }
+
+            footer {
+                padding: 50px 20px;
+            }
+
+            footer h5 {
+                font-size: 1.3rem;
+            }
+
+            footer p {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 
@@ -227,10 +275,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'result' %}">Prediction</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#">IPL Predictor</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'result' %}">T20 Prediction</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'result_model2' %}">IPL Predictor</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{% url 'upcoming' %}">Upcoming Matches</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{% url 'team_list' %}">Teams</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'articles' %}">Articles</a></li>
                 </ul>
                 {% if request.user.is_authenticated %}
                     <a href="{% url 'logout' %}" class="btn btn-danger ms-3">Logout</a>
@@ -245,7 +294,6 @@
         <a href="{% url 'result' %}" class="btn btn-custom">Get Started</a>
     </div>
 
-    <!-- Features Section -->
     <div id="features" class="container text-center">
         <h2 class="mb-4">Key Features</h2>
         <div class="row justify-content-center">
@@ -271,65 +319,35 @@
             </div>
         </div>
     </div>
+
+    <div id="widget" class="container text-center my-5" style="display: flex; justify-content: center; align-items: center; flex-direction: column; padding-left: 20px; margin-left: 50px;">
+        <h2>Live Score</h2>
+        <iframe src="https://bwidget.crictimes.org/" style="width: 100%; max-width: 900px; min-height: 250px; border: none; margin: 20px 0;" frameborder="0" scrolling="yes"></iframe>
+    </div>
+    
     <div class="feedback">
         <center><a class="btn btn-review " href="{% url 'feedback' %}">Add Review</a></center>
     </div>
-    <!-- Floating AI Button -->
-<div class="ai-button" id="aiButton">
-<a href="{% url 'ask_ai_page'%}"><i class="fas fa-robot"></i></a>
-</div>
 
-    
-
-    <footer style="background: #f1f1f1; padding: 30px 0;">
+    <footer>
         <div class="container">
-            <div class="row">
-                <!-- Social Media Links -->
-                <div class="col-md-3 text-center text-md-start mb-3">
-                    <h5 class="fw-bold" style="color: #333;">Follow us on</h5>
-                    <a href="#" class="me-2" style="color: #333;"><i class="fa-brands fa-facebook fa-2x"></i></a>
-                    <a href="#" class="me-2" style="color: #333;"><i class="fa-brands fa-instagram fa-2x"></i></a>
-                    <a href="#" class="me-2" style="color: #333;"><i class="fa-brands fa-linkedin fa-2x"></i></a>
-                    <a href="#" style="color: #333;"><i class="fa-brands fa-x-twitter fa-2x"></i></a>
-                </div>
-    
-                <!-- Website Information -->
-                <div class="col-md-3 text-center text-md-start mb-3">
-                    <h5 class="fw-bold" style="color: #333;">Cricket Hub</h5>
-                    <p style="color: #555;">Cricket like never before!</p>
-                </div>
-    
-                <!-- Navigation Links -->
-                <div class="col-md-3 text-center text-md-start mb-3">
-                    <h5 class="fw-bold" style="color: #333;">Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Criclytics™</a></li>
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Match Schedule</a></li>
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Fantasy Center</a></li>
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">All Series</a></li>
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Cricket News</a></li>
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Cricket Videos</a></li>
-                    </ul>
-                </div>
-    
-                <!-- Legal Links -->
-                <div class="col-md-3 text-center text-md-start mb-3">
-                    <h5 class="fw-bold" style="color: #333;">Legal</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Privacy Policy</a></li>
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Terms of Use</a></li>
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Cookie Policy</a></li>
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Security</a></li>
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Legality</a></li>
-                        <li><a href="#" style="color: #007bff; text-decoration: none;">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="text-center mt-3">
-                <p class="mb-0" style="color: #555;">&copy; 2025 Cricket Hub | All rights reserved</p>
+            <h5>Cricket Hub</h5>
+            <p>All your cricket needs, in one place.</p>
+            <div class="social-icons-footer">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
             </div>
         </div>
     </footer>
+
+    <div class="ai-button">
+        <a href="{% url 'ask_ai_page' %}" style="color: black;">
+            <i class="fa fa-robot"></i>
+        </a>
+    </div>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -65,10 +65,11 @@
 
             <ul class="navbar-nav ms-auto d-flex flex-row">
                 <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'result' %}">Prediction</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">IPL Predictor</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'result' %}">T20 Prediction</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'result_model2' %}">IPL Predictor</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'upcoming' %}">Upcoming Matches</a></li>
                 <li class="nav-item"><a class="nav-link text-primary fw-bold" href="{% url 'team_list' %}">Teams</a></li>
+                <li class="nav-item"><a class="nav-link text-primary fw-bold" href="{% url 'articles' %}">Articles</a></li>
 
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
@@ -89,7 +90,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for team in teams %}
             <div class="bg-white shadow-lg rounded-lg p-4 text-center team-card hover:shadow-xl transition">
-                <img src="{{ team.logo_url }}" alt="{{ team.name }} Logo" class="team-logo">
+                <img src="{% static 'images/' %}{{ team.name|lower }}.png" alt="{{ team.name }} Logo" class="team-logo">
                 <h3 class="text-xl font-semibold text-blue-600 mt-2">
                     <a href="{% url 'team_detail' team_id=team.id %}" class="text-blue-500 hover:underline">
                         {{ team.name }}

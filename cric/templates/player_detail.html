@@ -22,7 +22,7 @@
         }
 
         body {
-            padding-top: 80px;
+            padding-top: 90px;
         }
 
         .player-card {
@@ -63,22 +63,42 @@
 
 <body class="bg-gray-100">
 
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="{% url 'home' %}">
                 <img src="{% static 'images/logo.png' %}" alt="Logo" width="40" class="me-2">
-                <span class="text-dark">Cricket Hub</span>
+                <span class="text-dark fs-4">Cricket Hub</span>
             </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'result' %}">T20 Prediction</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'result_model2' %}">IPL Predictor</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'upcoming' %}">Upcoming Matches</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'team_list' %}">Teams</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'articles' %}">Articles</a></li>
+                </ul>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="btn btn-danger ms-3">Logout</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
 
+    <!-- Player Card -->
     <div class="container my-5">
-        <div class="player-card">
-            <img src="{{ player.image_url }}" alt="{{ player.name }}" class="player-image">
-            <h2 class="text-2xl font-bold text-primary">{{ player.name }}</h2>
+        <div class="player-card flex flex-col items-center justify-center">
+            <img src="{% static 'images/'|add:player.name|add:'.png' %}" alt="{{ player.name }}" class="player-image">
+            <h2 class="text-2xl font-bold text-primary mt-2">{{ player.name }}</h2>
             <p class="text-gray-600">Age: <b>{{ player.age }}</b></p>
             <p class="text-gray-600">Nationality: <b>{{ player.nationality }}</b></p>
-            <p class="text-gray-600">Team: 
+            <p class="text-gray-600">Team:
                 <a href="{% url 'team_detail' player.team.id %}" class="text-blue-500 hover:underline">
                     {{ player.team.name }}
                 </a>
@@ -107,7 +127,7 @@
             </table>
 
             <div class="mt-4">
-                <a href="{% url 'player_list' %}" class="btn btn-outline-primary">Back to Players</a>
+                <a href="{% url 'player_list' %}" class="btn btn-outline-primary me-2">Back to Players</a>
                 <a href="{% url 'team_detail' player.team.id %}" class="btn btn-outline-secondary">View Team</a>
             </div>
         </div>
